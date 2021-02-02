@@ -26,18 +26,6 @@ Para generar la imagen de la base de datos ejecutar el Docker file en /src/cmain
 Y ejecutar la imagen 
 ### `docker run --volume aLocalPath:/home/osmdata/gpkg --rm -P -p 55432:5432 -d --name postgis --network cloud  postgis12`
 
-Conectarse a la base de datos con PgAdmin para importar los puntos desde el archivo CSV
-
-La conexión a la base de datos desde PgAdmin:
-Host: localhost
-Port: 55432
-Maintenance database: opi
-Username: data
-Password: datapasswd
-
-Al entrar a la base de datos clic derecho sobre la tabla 'points' y seleccionar 'Import/Export'
-En la ventana emergente seleccionar el radio botón de 'Import' y seleccionar el archivo 'sincolumna.csv' del fichero /src/main/BDPostgis
-
 
 Crear el archivo jar del micro servicio springboot-points con maven (desde el directorio donde se descargo el repositorio)
 ### `mvn clean package -DskipTests=true`

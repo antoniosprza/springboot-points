@@ -35,6 +35,7 @@ WORKDIR /home/osmdata
 RUN mkdir /home/osmdata/pbf
 RUN mkdir /home/osmdata/gpkg
 COPY ./import_osm.sh /home/osmdata/pbf
+COPY ./puntos_examen_fullstack.csv /home/osmdata
 COPY ./mapping.yml /home/osmdata/pbf
 RUN ["chown" , "-R", "postgres:postgres", "/home/osmdata"]
 RUN ["chmod", "+x", "/home/osmdata/pbf/import_osm.sh"]
@@ -101,7 +102,8 @@ RUN    /etc/init.d/postgresql start &&\
     psql -d opi --command "CREATE EXTENSION IF NOT EXISTS postgis;" &&\
     psql -d opi --command "CREATE EXTENSION IF NOT EXISTS postgis_topology;" &&\
     psql -d opi --command "CREATE EXTENSION hstore;" &&\
-    psql -d opi --command "CREATE TABLE points(the_geom geography(POINT,4326), cartodb_id serial PRIMARY KEY, tipo VARCHAR(64), latitude VARCHAR(64), longitude VARCHAR(64), color VARCHAR(64));"
+    psql -d opi --command "CREATE TABLE points(the_geom geography(POINT,4326), cartodb_id serial PRIMARY KEY, tipo VARCHAR(64), latitude VARCHAR(64), longitude VARCHAR(64), color VARCHAR(64));" &&\
+    psql -d opi --command "COPY points FROM '/home/osmdata/puntos_examen_fullstack.csv' DELIMITER ',' CSV HEADER;"
 
 
 # Add VOLUMEs to allow backup of config, logs and databases
